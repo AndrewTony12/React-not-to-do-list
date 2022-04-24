@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Col, Form, Row, Table } from "react-bootstrap";
+import { Button, Col, Form, NavItem, Row, Table } from "react-bootstrap";
 
-export const TaskList = () => {
+export const TaskList = ({ TaskLists, removeFromTaskList,shiftToBadList }) => {
   return (
     <div>
       <h2 className="text-center">Task list</h2>
@@ -9,23 +9,33 @@ export const TaskList = () => {
 
       <Table striped hover>
         <tbody>
-          <tr>
-            <td>
-              <Form.Check type="checkbox" />
-            </td>
+          {TaskLists.map((item, i) => {
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <Form.Check type="checkbox" />
+                  </td>
 
-            <td>Task name</td>
-            <td>10 hr</td>
-            <td className="text-end">
-              <Button variant="danger">
-                <i class="fa-solid fa-trash"></i>
-              </Button>
-              {""}
-              <Button variant="primary">
-                <i className="fa-solid fa-arrow-right-long"></i>
-              </Button>
-            </td>
-          </tr>
+                  <td>{item.task}</td>
+                  <td>{item.hr}</td>
+                  <td className="text-end">
+                    <Button
+                      variant="danger"
+                      onClick={() => removeFromTaskList(i)}
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </Button>
+                    {""}
+                    <Button variant="primary" onClick={()=>shiftToBadList(i)}>
+                      <i className="fa-solid fa-arrow-right-long"></i>
+                    </Button>
+                  </td>
+                </tr>
+                ;
+              </>
+            );
+          })}
         </tbody>
       </Table>
     </div>
